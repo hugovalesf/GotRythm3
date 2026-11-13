@@ -16,21 +16,43 @@ let visualTimers = new Set();
 let isPlaying = false;
 let nextBeatTime = 0;
 let beatIndex = 0;
+let patternDeck = [];
+let lastPatternKey;
 
 const noteFigures = {
   quarter: '<svg class="note-figure" viewBox="0 0 32 30" aria-hidden="true"><ellipse cx="10" cy="22" rx="6" ry="4.3" transform="rotate(-20 10 22)"></ellipse><path d="M15 21V3h2v18z"></path></svg>',
   eighths: '<svg class="note-figure note-pair" viewBox="0 0 36 30" aria-hidden="true"><path d="M13 4h19v4H13z"></path><path d="M13 7h2v14h-2zM30 7h2v11h-2z"></path><ellipse cx="9" cy="22" rx="6" ry="4.3" transform="rotate(-20 9 22)"></ellipse><ellipse cx="26" cy="19" rx="6" ry="4.3" transform="rotate(-20 26 19)"></ellipse></svg>',
 };
 
-function randomChoice(options) {
-  return options[Math.floor(Math.random() * options.length)];
+function createPattern() {
+  if (patternDeck.length === 0) {
+    patternDeck = [];
+    for (const hihat of ["quarters", "eighths"]) {
+      for (const firstKick of ["quarter", "eighths"]) {
+        for (const secondKick of ["quarter", "eighths"]) {
+          patternDeck.push({ hihat, kick: [firstKick, secondKick] });
+        }
+      }
+    }
+
+    for (let index = patternDeck.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [patternDeck[index], patternDeck[swapIndex]] = [patternDeck[swapIndex], patternDeck[index]];
+    }
+
+    if (patternDeck.at(-1) && getPatternKey(patternDeck.at(-1)) === lastPatternKey) {
+      const swapIndex = Math.floor(Math.random() * (patternDeck.length - 1));
+      [patternDeck[swapIndex], patternDeck[patternDeck.length - 1]] = [patternDeck[patternDeck.length - 1], patternDeck[swapIndex]];
+    }
+  }
+
+  const nextPattern = patternDeck.pop();
+  lastPatternKey = getPatternKey(nextPattern);
+  return nextPattern;
 }
 
-function createPattern() {
-  return {
-    hihat: randomChoice(["quarters", "eighths"]),
-    kick: [randomChoice(["quarter", "eighths"]), randomChoice(["quarter", "eighths"])],
-  };
+function getPatternKey(rhythm) {
+  return `${rhythm.hihat}:${rhythm.kick[0]}:${rhythm.kick[1]}`;
 }
 
 function renderPattern() {
