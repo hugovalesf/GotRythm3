@@ -6,9 +6,13 @@ Aplicación web sencilla para practicar la escucha y la repetición de ritmos.
 
 [Abrir Ritmo a primera vista](https://hugovalesf.github.io/GotRythm3/)
 
+## Abrir en local
+
+Desde una copia del repositorio, abre [la aplicación local](./index.html) o abre `index.html` directamente en un navegador moderno. No requiere servidor ni instalar dependencias.
+
 ## Uso
 
-Abre `index.html` en un navegador moderno y pulsa **Empezar** para iniciar el audio. No requiere instalar dependencias ni ejecutar un servidor.
+Pulsa **Empezar** para iniciar el audio.
 
 - Cada patrón tiene cuatro pulsos y se practica durante cuatro compases.
 - El patrón de hi-hat, caja y bombo suena junto al metrónomo durante los cuatro compases.
