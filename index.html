@@ -21,7 +21,7 @@
       <section class="intro" aria-labelledby="page-title">
         <p class="eyebrow">ENTRENAMIENTO RÍTMICO</p>
         <h1 id="page-title">Escucha. <span>Recuerda.</span> Repite.</h1>
-        <p class="intro-copy">Memoriza el ritmo del primer compás y repítelo; cada cuatro compases aparece uno nuevo.</p>
+        <p class="intro-copy">Los tres instrumentos suenan en los cuatro compases; cada ciclo trae una combinación nueva.</p>
       </section>
 
       <section class="exercise" aria-label="Ejercicio de ritmo">
@@ -37,30 +37,42 @@
         </div>
 
         <div class="beat-grid" id="beat-grid" aria-label="Patrón de cuatro pulsos">
-          <article class="beat-card" data-beat="0" aria-label="Pulso 1">
-            <div class="beat-number"><span>01</span><span class="beat-light" aria-hidden="true"></span></div>
-            <div class="beat-part"><span class="part-name">HI-HAT</span><span class="notation" data-instrument="hihat" role="img"></span></div>
-            <div class="beat-part"><span class="part-name">CAJA</span><span class="notation" data-instrument="snare" role="img"></span></div>
-            <div class="beat-part"><span class="part-name">BOMBO</span><span class="notation" data-instrument="kick" role="img"></span></div>
-          </article>
-          <article class="beat-card" data-beat="1" aria-label="Pulso 2">
-            <div class="beat-number"><span>02</span><span class="beat-light" aria-hidden="true"></span></div>
-            <div class="beat-part"><span class="part-name">HI-HAT</span><span class="notation" data-instrument="hihat" role="img"></span></div>
-            <div class="beat-part"><span class="part-name">CAJA</span><span class="notation" data-instrument="snare" role="img"></span></div>
-            <div class="beat-part"><span class="part-name">BOMBO</span><span class="notation" data-instrument="kick" role="img"></span></div>
-          </article>
-          <article class="beat-card" data-beat="2" aria-label="Pulso 3">
-            <div class="beat-number"><span>03</span><span class="beat-light" aria-hidden="true"></span></div>
-            <div class="beat-part"><span class="part-name">HI-HAT</span><span class="notation" data-instrument="hihat" role="img"></span></div>
-            <div class="beat-part"><span class="part-name">CAJA</span><span class="notation" data-instrument="snare" role="img"></span></div>
-            <div class="beat-part"><span class="part-name">BOMBO</span><span class="notation" data-instrument="kick" role="img"></span></div>
-          </article>
-          <article class="beat-card" data-beat="3" aria-label="Pulso 4">
-            <div class="beat-number"><span>04</span><span class="beat-light" aria-hidden="true"></span></div>
-            <div class="beat-part"><span class="part-name">HI-HAT</span><span class="notation" data-instrument="hihat" role="img"></span></div>
-            <div class="beat-part"><span class="part-name">CAJA</span><span class="notation" data-instrument="snare" role="img"></span></div>
-            <div class="beat-part"><span class="part-name">BOMBO</span><span class="notation" data-instrument="kick" role="img"></span></div>
-          </article>
+          <div class="beat-ruler" aria-hidden="true">
+            <span class="instrument-column-label">LÍNEA</span>
+            <div class="beat-headings">
+              <span class="beat-heading" data-beat="0">01</span>
+              <span class="beat-heading" data-beat="1">02</span>
+              <span class="beat-heading" data-beat="2">03</span>
+              <span class="beat-heading" data-beat="3">04</span>
+            </div>
+          </div>
+          <div class="instrument-row" role="group" aria-label="Hi-hat">
+            <span class="instrument-name">HI-HAT</span>
+            <div class="beat-cells">
+              <div class="beat-cell" data-beat="0"><span class="notation" data-instrument="hihat" role="img"></span></div>
+              <div class="beat-cell" data-beat="1"><span class="notation" data-instrument="hihat" role="img"></span></div>
+              <div class="beat-cell" data-beat="2"><span class="notation" data-instrument="hihat" role="img"></span></div>
+              <div class="beat-cell" data-beat="3"><span class="notation" data-instrument="hihat" role="img"></span></div>
+            </div>
+          </div>
+          <div class="instrument-row" role="group" aria-label="Caja">
+            <span class="instrument-name">CAJA</span>
+            <div class="beat-cells">
+              <div class="beat-cell" data-beat="0"><span class="notation" data-instrument="snare" role="img"></span></div>
+              <div class="beat-cell" data-beat="1"><span class="notation" data-instrument="snare" role="img"></span></div>
+              <div class="beat-cell" data-beat="2"><span class="notation" data-instrument="snare" role="img"></span></div>
+              <div class="beat-cell" data-beat="3"><span class="notation" data-instrument="snare" role="img"></span></div>
+            </div>
+          </div>
+          <div class="instrument-row" role="group" aria-label="Bombo">
+            <span class="instrument-name">BOMBO</span>
+            <div class="beat-cells">
+              <div class="beat-cell" data-beat="0"><span class="notation" data-instrument="kick" role="img"></span></div>
+              <div class="beat-cell" data-beat="1"><span class="notation" data-instrument="kick" role="img"></span></div>
+              <div class="beat-cell" data-beat="2"><span class="notation" data-instrument="kick" role="img"></span></div>
+              <div class="beat-cell" data-beat="3"><span class="notation" data-instrument="kick" role="img"></span></div>
+            </div>
+          </div>
         </div>
 
         <div class="measure-progress" aria-label="Progreso del ejercicio">

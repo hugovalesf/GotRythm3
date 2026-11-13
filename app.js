@@ -1,4 +1,5 @@
-const beatCards = [...document.querySelectorAll(".beat-card")];
+const beatCells = [...document.querySelectorAll(".beat-cell")];
+const beatHeadings = [...document.querySelectorAll(".beat-heading")];
 const measureDots = [...document.querySelectorAll(".progress-dot")];
 const tempoSlider = document.querySelector("#tempo");
 const tempoValue = document.querySelector("#tempo-value");
@@ -90,8 +91,8 @@ function setMeasure(measure) {
   measureLabel.textContent = measure === 0
     ? "Listo para empezar"
     : measure === 1
-      ? "Escucha el ritmo"
-      : "Repite el ritmo";
+      ? "Nuevo ritmo"
+      : "Ritmo en reproducción";
   measureCount.textContent = `${measure} / 4`;
   measureDots.forEach((dot, index) => {
     dot.classList.toggle("is-complete", index < measure);
@@ -100,7 +101,8 @@ function setMeasure(measure) {
 }
 
 function setActiveBeat(index) {
-  beatCards.forEach((card, beat) => card.classList.toggle("is-active", beat === index));
+  beatCells.forEach((cell) => cell.classList.toggle("is-active", Number(cell.dataset.beat) === index));
+  beatHeadings.forEach((heading) => heading.classList.toggle("is-active", Number(heading.dataset.beat) === index));
 }
 
 function getNoiseBuffer() {
@@ -181,9 +183,6 @@ function playHiHat(time) {
 
 function scheduleDrums(index, beatDuration) {
   const beatInMeasure = index % 4;
-  const isFirstMeasure = index % 16 < 4;
-
-  if (!isFirstMeasure) return;
 
   if (pattern.hihat === "quarters") {
     playHiHat(nextBeatTime);
@@ -240,7 +239,7 @@ function stopPlayback() {
   window.clearInterval(schedulerId);
   visualTimers.forEach((timer) => window.clearTimeout(timer));
   visualTimers.clear();
-  beatCards.forEach((card) => card.classList.remove("is-active"));
+  setActiveBeat(-1);
   exercise.classList.remove("is-playing");
   startButton.innerHTML = '<span class="play-icon" aria-hidden="true"></span> Empezar';
   newPatternButton.disabled = false;
