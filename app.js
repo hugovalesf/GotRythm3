@@ -100,9 +100,17 @@ function setMeasure(measure) {
   });
 }
 
-function setActiveBeat(index) {
-  beatCells.forEach((cell) => cell.classList.toggle("is-active", Number(cell.dataset.beat) === index));
-  beatHeadings.forEach((heading) => heading.classList.toggle("is-active", Number(heading.dataset.beat) === index));
+function setActiveBeat(index, isFirstMeasure = false) {
+  beatCells.forEach((cell) => {
+    const isActive = Number(cell.dataset.beat) === index;
+    cell.classList.toggle("is-active", isActive);
+    cell.classList.toggle("is-first-measure", isActive && isFirstMeasure);
+  });
+  beatHeadings.forEach((heading) => {
+    const isActive = Number(heading.dataset.beat) === index;
+    heading.classList.toggle("is-active", isActive);
+    heading.classList.toggle("is-first-measure", isActive && isFirstMeasure);
+  });
 }
 
 function getNoiseBuffer() {
@@ -212,7 +220,7 @@ function scheduleVisuals(index, time) {
     visualTimers.delete(timer);
     const measure = Math.floor((index % 16) / 4) + 1;
     setMeasure(measure);
-    setActiveBeat(index % 4);
+    setActiveBeat(index % 4, measure === 1);
   }, delay);
   visualTimers.add(timer);
 }
