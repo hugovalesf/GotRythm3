@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f6f2">
+    <title>Ritmo a primera vista</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Ritmo a primera vista, inicio">
+          <span class="brand-mark" aria-hidden="true">R</span>
+          <span>RITMO <span class="brand-light">A PRIMERA VISTA</span></span>
+        </a>
+        <span class="time-signature">4 / 4</span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">ENTRENAMIENTO RÍTMICO</p>
+        <h1 id="page-title">Escucha. <span>Recuerda.</span> Repite.</h1>
+        <p class="intro-copy">Memoriza el ritmo del primer compás y síguelo con el metrónomo.</p>
+      </section>
+
+      <section class="exercise" aria-label="Ejercicio de ritmo">
+        <div class="exercise-heading">
+          <div>
+            <p class="eyebrow">TU PATRÓN</p>
+            <h2>Un ritmo, cuatro compases</h2>
+          </div>
+          <div class="measure-status" aria-live="polite">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span id="measure-label">Listo para empezar</span>
+          </div>
+        </div>
+
+        <div class="beat-grid" id="beat-grid" aria-label="Patrón de cuatro pulsos">
+          <article class="beat-card" data-beat="0" aria-label="Pulso 1">
+            <div class="beat-number"><span>01</span><span class="beat-light" aria-hidden="true"></span></div>
+            <div class="beat-part"><span class="part-name">HI-HAT</span><span class="notation" data-instrument="hihat"></span></div>
+            <div class="beat-part"><span class="part-name">CAJA</span><span class="notation" data-instrument="snare"></span></div>
+            <div class="beat-part"><span class="part-name">BOMBO</span><span class="notation" data-instrument="kick"></span></div>
+          </article>
+          <article class="beat-card" data-beat="1" aria-label="Pulso 2">
+            <div class="beat-number"><span>02</span><span class="beat-light" aria-hidden="true"></span></div>
+            <div class="beat-part"><span class="part-name">HI-HAT</span><span class="notation" data-instrument="hihat"></span></div>
+            <div class="beat-part"><span class="part-name">CAJA</span><span class="notation" data-instrument="snare"></span></div>
+            <div class="beat-part"><span class="part-name">BOMBO</span><span class="notation" data-instrument="kick"></span></div>
+          </article>
+          <article class="beat-card" data-beat="2" aria-label="Pulso 3">
+            <div class="beat-number"><span>03</span><span class="beat-light" aria-hidden="true"></span></div>
+            <div class="beat-part"><span class="part-name">HI-HAT</span><span class="notation" data-instrument="hihat"></span></div>
+            <div class="beat-part"><span class="part-name">CAJA</span><span class="notation" data-instrument="snare"></span></div>
+            <div class="beat-part"><span class="part-name">BOMBO</span><span class="notation" data-instrument="kick"></span></div>
+          </article>
+          <article class="beat-card" data-beat="3" aria-label="Pulso 4">
+            <div class="beat-number"><span>04</span><span class="beat-light" aria-hidden="true"></span></div>
+            <div class="beat-part"><span class="part-name">HI-HAT</span><span class="notation" data-instrument="hihat"></span></div>
+            <div class="beat-part"><span class="part-name">CAJA</span><span class="notation" data-instrument="snare"></span></div>
+            <div class="beat-part"><span class="part-name">BOMBO</span><span class="notation" data-instrument="kick"></span></div>
+          </article>
+        </div>
+
+        <div class="measure-progress" aria-label="Progreso del ejercicio">
+          <span class="progress-label">COMPÁS</span>
+          <div class="progress-dots" aria-hidden="true">
+            <span class="progress-dot"></span>
+            <span class="progress-dot"></span>
+            <span class="progress-dot"></span>
+            <span class="progress-dot"></span>
+          </div>
+          <span id="measure-count">0 / 4</span>
+        </div>
+      </section>
+
+      <section class="controls" aria-label="Controles del ejercicio">
+        <div class="tempo-control">
+          <div class="tempo-heading">
+            <label for="tempo">TEMPO</label>
+            <output id="tempo-value" for="tempo">90 <span>BPM</span></output>
+          </div>
+          <input id="tempo" type="range" min="40" max="200" value="90" aria-label="Tempo en pulsos por minuto">
+          <div class="tempo-range"><span>40</span><span>200 BPM</span></div>
+        </div>
+        <div class="action-controls">
+          <button class="secondary-button" id="new-pattern" type="button">
+            <span aria-hidden="true">↻</span> Nuevo ritmo
+          </button>
+          <button class="primary-button" id="start-button" type="button">
+            <span class="play-icon" aria-hidden="true"></span> Empezar
+          </button>
+        </div>
+      </section>
+
+      <footer class="legend">
+        <span><span class="legend-symbol">♩</span> Negra</span>
+        <span><span class="legend-symbol">♪♪</span> Dos corcheas</span>
+        <span class="legend-note">El metrónomo marca los cuatro pulsos en cada compás.</span>
+      </footer>
+    </main>
+  </body>
+</html>
