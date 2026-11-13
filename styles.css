@@ -232,7 +232,7 @@ h1 span {
 
 .beat-part {
   justify-content: space-between;
-  min-height: 37px;
+  min-height: 45px;
   gap: 6px;
   border-bottom: 1px solid #f0f1ed;
 }
@@ -242,27 +242,37 @@ h1 span {
 }
 
 .part-name {
-  color: #929a93;
+  color: #b0b7ad;
   font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.5px;
+  font-size: 7px;
+  letter-spacing: 0.35px;
 }
 
 .notation {
-  min-width: 32px;
+  display: flex;
+  min-width: 42px;
+  height: 38px;
+  align-items: center;
+  justify-content: flex-end;
   color: #2f3c35;
-  font-family: var(--display);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1;
-  text-align: right;
-  white-space: nowrap;
+}
+
+.note-figure {
+  display: block;
+  width: 40px;
+  height: 36px;
+  fill: currentColor;
 }
 
 .notation.is-rest {
   color: #d3d8d0;
+}
+
+.rest-mark {
+  padding-right: 9px;
+  font-family: var(--mono);
   font-size: 16px;
-  font-weight: 400;
+  line-height: 1;
 }
 
 .measure-progress {
@@ -444,11 +454,22 @@ h1 span {
 }
 
 .legend-symbol {
+  display: inline-flex;
+  width: 28px;
+  height: 20px;
+  align-items: center;
   margin-right: 4px;
   color: #334139;
-  font-family: var(--display);
-  font-size: 16px;
-  vertical-align: -1px;
+  vertical-align: middle;
+}
+
+.legend-symbol .note-figure {
+  width: 24px;
+  height: 20px;
+}
+
+.legend-symbol .note-pair {
+  width: 28px;
 }
 
 .legend-note {
@@ -489,21 +510,30 @@ h1 span {
   }
 
   .beat-part {
-    min-height: 36px;
-    align-items: flex-start;
-    flex-direction: column;
+    min-height: 40px;
+    align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 0;
   }
 
   .part-name {
-    font-size: 7px;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .notation {
     min-width: 0;
-    font-size: 17px;
-    text-align: left;
+    height: 35px;
+    justify-content: center;
+  }
+
+  .note-figure {
+    width: 36px;
+    height: 33px;
   }
 
   .controls {

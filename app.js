@@ -12,11 +12,15 @@ let pattern;
 let audioContext;
 let noiseBuffer;
 let schedulerId;
-let completionId;
-let visualTimers = [];
+let visualTimers = new Set();
 let isPlaying = false;
 let nextBeatTime = 0;
 let beatIndex = 0;
+
+const noteFigures = {
+  quarter: '<svg class="note-figure" viewBox="0 0 32 30" aria-hidden="true"><ellipse cx="10" cy="22" rx="6" ry="4.3" transform="rotate(-20 10 22)"></ellipse><path d="M15 21V3h2v18z"></path></svg>',
+  eighths: '<svg class="note-figure note-pair" viewBox="0 0 36 30" aria-hidden="true"><path d="M13 4h19v4H13z"></path><path d="M13 7h2v14h-2zM30 7h2v11h-2z"></path><ellipse cx="9" cy="22" rx="6" ry="4.3" transform="rotate(-20 9 22)"></ellipse><ellipse cx="26" cy="19" rx="6" ry="4.3" transform="rotate(-20 26 19)"></ellipse></svg>',
+};
 
 function randomChoice(options) {
   return options[Math.floor(Math.random() * options.length)];
@@ -31,21 +35,26 @@ function createPattern() {
 
 function renderPattern() {
   document.querySelectorAll('[data-instrument="hihat"]').forEach((element) => {
-    element.textContent = pattern.hihat === "quarters" ? "♩" : "♪♪";
-    element.classList.remove("is-rest");
+    const isEighths = pattern.hihat === "eighths";
+    setNotation(element, isEighths ? "eighths" : "quarter", `Hi-hat: ${isEighths ? "dos corcheas" : "negra"}`);
   });
 
   document.querySelectorAll('[data-instrument="snare"]').forEach((element, index) => {
     const playsSnare = index === 1 || index === 3;
-    element.textContent = playsSnare ? "♩" : "—";
-    element.classList.toggle("is-rest", !playsSnare);
+    setNotation(element, playsSnare ? "quarter" : null, playsSnare ? "Caja: negra" : "Caja: silencio");
   });
 
   document.querySelectorAll('[data-instrument="kick"]').forEach((element, index) => {
     const kickPattern = index === 0 ? pattern.kick[0] : index === 2 ? pattern.kick[1] : null;
-    element.textContent = kickPattern === "quarter" ? "♩" : kickPattern === "eighths" ? "♪♪" : "—";
-    element.classList.toggle("is-rest", !kickPattern);
+    setNotation(element, kickPattern, kickPattern === "eighths" ? "Bombo: dos corcheas" : kickPattern ? "Bombo: negra" : "Bombo: silencio");
   });
+}
+
+function setNotation(element, figure, label) {
+  element.innerHTML = figure
+    ? noteFigures[figure]
+    : '<span class="rest-mark" aria-hidden="true">—</span>';
+  element.setAttribute("aria-label", label);
 }
 
 function updateTempo() {
@@ -60,9 +69,7 @@ function setMeasure(measure) {
     ? "Listo para empezar"
     : measure === 1
       ? "Escucha el ritmo"
-      : measure < 4
-        ? "Repite el ritmo"
-        : "Ejercicio completado";
+      : "Repite el ritmo";
   measureCount.textContent = `${measure} / 4`;
   measureDots.forEach((dot, index) => {
     dot.classList.toggle("is-complete", index < measure);
@@ -152,7 +159,7 @@ function playHiHat(time) {
 
 function scheduleDrums(index, beatDuration) {
   const beatInMeasure = index % 4;
-  const isFirstMeasure = index < 4;
+  const isFirstMeasure = index % 16 < 4;
 
   if (!isFirstMeasure) return;
 
@@ -181,16 +188,21 @@ function scheduleDrums(index, beatDuration) {
 function scheduleVisuals(index, time) {
   const delay = Math.max(0, (time - audioContext.currentTime) * 1000);
   const timer = window.setTimeout(() => {
-    const measure = Math.floor(index / 4);
-    setMeasure(measure + 1);
+    visualTimers.delete(timer);
+    const measure = Math.floor((index % 16) / 4) + 1;
+    setMeasure(measure);
     setActiveBeat(index % 4);
   }, delay);
-  visualTimers.push(timer);
+  visualTimers.add(timer);
 }
 
 function scheduleBeats() {
-  while (beatIndex < 16 && nextBeatTime < audioContext.currentTime + 0.1) {
+  while (nextBeatTime < audioContext.currentTime + 0.1) {
     const index = beatIndex;
+    if (index > 0 && index % 16 === 0) {
+      pattern = createPattern();
+      renderPattern();
+    }
     const duration = 60 / Number(tempoSlider.value);
     const beatTime = nextBeatTime;
     playClick(beatTime, index % 4 === 0);
@@ -198,29 +210,14 @@ function scheduleBeats() {
     scheduleVisuals(index, beatTime);
     beatIndex += 1;
     nextBeatTime += duration;
-
-    if (beatIndex === 16) {
-      completionId = window.setTimeout(finishPlayback, Math.max(0, (nextBeatTime - audioContext.currentTime) * 1000));
-    }
   }
-
-  if (beatIndex === 16) {
-    window.clearInterval(schedulerId);
-  }
-}
-
-function finishPlayback() {
-  stopPlayback();
-  setMeasure(4);
-  setActiveBeat(-1);
 }
 
 function stopPlayback() {
   isPlaying = false;
   window.clearInterval(schedulerId);
-  window.clearTimeout(completionId);
   visualTimers.forEach((timer) => window.clearTimeout(timer));
-  visualTimers = [];
+  visualTimers.clear();
   beatCards.forEach((card) => card.classList.remove("is-active"));
   exercise.classList.remove("is-playing");
   startButton.innerHTML = '<span class="play-icon" aria-hidden="true"></span> Empezar';
@@ -247,7 +244,7 @@ async function startPlayback() {
 
   isPlaying = true;
   beatIndex = 0;
-  visualTimers = [];
+  visualTimers.clear();
   exercise.classList.add("is-playing");
   startButton.innerHTML = '<span class="stop-icon" aria-hidden="true"></span> Detener';
   newPatternButton.disabled = true;
