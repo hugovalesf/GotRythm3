@@ -219,53 +219,57 @@ h1 span {
   display: grid;
   min-height: 23px;
   place-items: center;
-  border-radius: 7px;
+  border: 1px solid #e8eae5;
+  border-radius: 8px;
+  background: #fcfcfa;
   color: #9aa19b;
   font-family: var(--mono);
   font-size: 10px;
-  transition: background-color 100ms ease, color 100ms ease;
+  transition: background-color 100ms ease, border-color 100ms ease, color 100ms ease;
 }
 
 .beat-heading.is-active {
-  background: #eaf5d9;
-  color: #4e6d31;
+  border-color: #8dbb52;
+  background: #dff2c3;
+  color: #405d29;
 }
 
 .instrument-row {
   min-width: 0;
-  min-height: 62px;
-  padding: 7px 8px;
-  border: 1px solid #e8eae5;
+  min-height: 76px;
+  padding: 8px;
+  border: 1px solid #dfe4dc;
   border-radius: 11px;
-  background: #fcfcfa;
-  transition: border-color 100ms ease, box-shadow 100ms ease;
+  background: #fff;
+  box-shadow: 0 2px 6px rgb(42 54 41 / 3%);
 }
 
 .instrument-name {
   padding-left: 4px;
-  color: #69756b;
+  color: #59685d;
   font-family: var(--mono);
   font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.45px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
 }
 
 .beat-cell {
   display: flex;
   min-width: 0;
-  min-height: 46px;
+  min-height: 58px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #eceee8;
-  border-radius: 8px;
+  border: 1px solid #dfe4dc;
+  border-radius: 9px;
   background: white;
-  transition: background-color 100ms ease, border-color 100ms ease, box-shadow 100ms ease;
+  transition: background-color 100ms ease, border-color 100ms ease, box-shadow 100ms ease, transform 100ms ease;
 }
 
 .beat-cell.is-active {
-  border-color: #b7e67b;
-  background: #f5fbe9;
-  box-shadow: 0 0 0 2px rgb(183 239 97 / 22%);
+  transform: translateY(-1px);
+  border-color: #83b643;
+  background: #e8f6d4;
+  box-shadow: inset 0 0 0 1px #a5ce70, 0 2px 7px rgb(95 145 43 / 12%);
 }
 
 .notation {
@@ -280,13 +284,13 @@ h1 span {
 
 .note-figure {
   display: block;
-  width: 40px;
-  height: 36px;
+  width: 48px;
+  height: 46px;
   fill: currentColor;
 }
 
 .notation.is-rest {
-  color: #d3d8d0;
+  color: #a4ada2;
 }
 
 .rest-mark {
@@ -546,7 +550,7 @@ h1 span {
   }
 
   .instrument-row {
-    min-height: 56px;
+    min-height: 66px;
     padding: 5px 6px;
   }
 
@@ -556,7 +560,7 @@ h1 span {
   }
 
   .beat-cell {
-    min-height: 42px;
+    min-height: 50px;
     border-radius: 6px;
   }
 
@@ -566,12 +570,12 @@ h1 span {
   }
 
   .notation {
-    height: 34px;
+    height: 42px;
   }
 
   .note-figure {
-    width: 34px;
-    height: 31px;
+    width: 38px;
+    height: 40px;
   }
 
   .controls {

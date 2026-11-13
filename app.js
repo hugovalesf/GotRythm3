@@ -21,8 +21,8 @@ let patternDeck = [];
 let lastPatternKey;
 
 const noteFigures = {
-  quarter: '<svg class="note-figure" viewBox="0 0 32 30" aria-hidden="true"><ellipse cx="10" cy="22" rx="6" ry="4.3" transform="rotate(-20 10 22)"></ellipse><path d="M15 21V3h2v18z"></path></svg>',
-  eighths: '<svg class="note-figure note-pair" viewBox="0 0 36 30" aria-hidden="true"><path d="M13 4h19v4H13z"></path><path d="M13 7h2v14h-2zM30 7h2v11h-2z"></path><ellipse cx="9" cy="22" rx="6" ry="4.3" transform="rotate(-20 9 22)"></ellipse><ellipse cx="26" cy="19" rx="6" ry="4.3" transform="rotate(-20 26 19)"></ellipse></svg>',
+  quarter: '<svg class="note-figure" viewBox="0 0 28 34" aria-hidden="true"><ellipse cx="10" cy="26" rx="7" ry="5.1" transform="rotate(-20 10 26)"></ellipse><path d="M16 25V3h2v22z"></path></svg>',
+  eighths: '<svg class="note-figure note-pair" viewBox="0 0 40 34" aria-hidden="true"><path d="M15 4h22v5H15z"></path><path d="M15 8h2v17h-2zM35 8h2v14h-2z"></path><ellipse cx="10" cy="26" rx="7" ry="5.1" transform="rotate(-20 10 26)"></ellipse><ellipse cx="30" cy="23" rx="7" ry="5.1" transform="rotate(-20 30 23)"></ellipse></svg>',
 };
 
 function createPattern() {
