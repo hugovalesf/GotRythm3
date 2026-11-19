@@ -48,12 +48,14 @@ let finished = false;
 let finaleTimers = [];
 let mismatchTimer;
 
-const timpaniAudioUrl = './Audios/Timpani%2BHit%2Bin%2BG%2B-%2BSound%2BEffect%20%5BTH5Q2vN5nbM%5D.mp3';
+const timpaniAudio = new Audio('./Audios/timpani-hit.mp3');
+timpaniAudio.preload = 'auto';
+timpaniAudio.volume = 1;
 
 function playTimpaniAudio() {
-  const audio = new Audio(timpaniAudioUrl);
-  audio.volume = 1;
-  audio.play().catch((error) => {
+  timpaniAudio.pause();
+  timpaniAudio.currentTime = 0;
+  timpaniAudio.play().catch((error) => {
     console.error("No se pudo reproducir el audio del timbal.", error);
   });
 }
