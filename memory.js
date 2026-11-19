@@ -21,7 +21,7 @@ const figures = [
     id: "rest",
     name: "Silencio",
     color: "#e879a8",
-    svg: '<svg viewBox="0 0 100 120" aria-hidden="true"><path d="M29 20h43v12L49 51l18 13-17 18 13 12c7 6 8 14 2 20-7 8-21 6-31-4" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+    svg: '<svg viewBox="0 0 100 120" aria-hidden="true"><path d="M72 8 31 29l40 24-44 34 43 25" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="27" cy="112" r="5" fill="currentColor"></circle></svg>',
   },
   {
     id: "half",
@@ -47,6 +47,16 @@ let locked = false;
 let finished = false;
 let finaleTimers = [];
 let mismatchTimer;
+
+const timpaniAudioUrl = './Audios/Timpani%2BHit%2Bin%2BG%2B-%2BSound%2BEffect%20%5BTH5Q2vN5nbM%5D.mp3';
+
+function playTimpaniAudio() {
+  const audio = new Audio(timpaniAudioUrl);
+  audio.volume = 1;
+  audio.play().catch((error) => {
+    console.error("No se pudo reproducir el audio del timbal.", error);
+  });
+}
 
 function shuffle(items) {
   const shuffled = [...items];
@@ -151,31 +161,33 @@ function playTambourine(time, context = getAudioContext(), volume = 0.24) {
   }
 }
 
-function playTimpaniRollHit(time, context, volume) {
+function playTimpaniHit(time, context, volume) {
   const body = context.createOscillator();
   const bodyGain = context.createGain();
   body.type = "sine";
   body.frequency.setValueAtTime(145, time);
-  body.frequency.exponentialRampToValueAtTime(108, time + 0.38);
+  body.frequency.exponentialRampToValueAtTime(108, time + 0.9);
   bodyGain.gain.setValueAtTime(0.0001, time);
-  bodyGain.gain.exponentialRampToValueAtTime(volume, time + 0.012);
-  bodyGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.42);
+  bodyGain.gain.exponentialRampToValueAtTime(volume, time + 0.018);
+  bodyGain.gain.exponentialRampToValueAtTime(volume * 0.32, time + 0.28);
+  bodyGain.gain.exponentialRampToValueAtTime(0.0001, time + 1.35);
   body.connect(bodyGain);
   bodyGain.connect(context.destination);
   body.start(time);
-  body.stop(time + 0.43);
+  body.stop(time + 1.38);
 
   const overtone = context.createOscillator();
   const overtoneGain = context.createGain();
   overtone.type = "triangle";
   overtone.frequency.setValueAtTime(210, time);
-  overtone.frequency.exponentialRampToValueAtTime(165, time + 0.24);
+  overtone.frequency.exponentialRampToValueAtTime(165, time + 0.75);
   overtoneGain.gain.setValueAtTime(volume * 0.24, time);
-  overtoneGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.26);
+  overtoneGain.gain.exponentialRampToValueAtTime(volume * 0.08, time + 0.38);
+  overtoneGain.gain.exponentialRampToValueAtTime(0.0001, time + 1.05);
   overtone.connect(overtoneGain);
   overtoneGain.connect(context.destination);
   overtone.start(time);
-  overtone.stop(time + 0.27);
+  overtone.stop(time + 1.08);
 }
 
 function playFigure(figureId, startTime, context = getAudioContext(), speed = beatDuration) {
@@ -189,14 +201,17 @@ function playFigure(figureId, startTime, context = getAudioContext(), speed = be
       playTambourine(startTime + (speed * hit) / 4, context);
     }
   } else if (figureId === "half") {
-    for (let hit = 0; hit < 8; hit += 1) {
-      playTimpaniRollHit(startTime + (speed * hit) / 4, context, 0.2);
-    }
+    playTimpaniHit(startTime, context, 0.2);
   }
 }
 
 async function playCardSound(figureId) {
   try {
+    if (figureId === "half") {
+      playTimpaniAudio();
+      return;
+    }
+
     const context = getAudioContext();
     if (context.state === "suspended") {
       await context.resume();
