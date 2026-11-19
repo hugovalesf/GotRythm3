@@ -92,6 +92,24 @@ input {
   font-weight: 600;
 }
 
+.companion-link {
+  margin-left: auto;
+  margin-right: 16px;
+  color: #526344;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.companion-link:hover {
+  text-decoration: underline;
+}
+
+.companion-link:focus-visible {
+  outline: 2px solid #729b47;
+  outline-offset: 4px;
+}
+
 .time-signature {
   padding: 6px 10px;
   border: 1px solid #dfe2da;
@@ -522,6 +540,11 @@ h1 span {
 
   .intro {
     padding: 38px 0 25px;
+  }
+
+  .companion-link {
+    margin-right: 10px;
+    font-size: 10px;
   }
 
   h1 {

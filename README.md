@@ -6,9 +6,13 @@ Aplicación web sencilla para practicar la escucha y la repetición de ritmos.
 
 [Abrir Ritmo a primera vista](https://hugovalesf.github.io/GotRythm3/)
 
+[Jugar al memory de figuras musicales](https://hugovalesf.github.io/GotRythm3/memory.html)
+
 ## Abrir en local
 
 Desde una copia del repositorio, abre [la aplicación local](./index.html) o abre `index.html` directamente en un navegador moderno. No requiere servidor ni instalar dependencias.
+
+El juego de memoria también puede abrirse directamente en [memory.html](./memory.html).
 
 ## Uso
 

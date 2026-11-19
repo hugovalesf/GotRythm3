@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff8e9">
+    <title>Memory musical | Ritmo a primera vista</title>
+    <link rel="stylesheet" href="memory.css">
+    <script src="memory.js" defer></script>
+  </head>
+  <body>
+    <main class="game">
+      <header class="topbar">
+        <a class="back-link" href="index.html">← Ritmo a primera vista</a>
+        <span class="music-badge" aria-hidden="true">♪ ♫</span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">¡JUGAMOS CON LA MÚSICA!</p>
+        <h1 id="page-title">Memory <span>musical</span></h1>
+        <p>Encuentra cada figura y su nombre. ¡Toca una carta para escucharla!</p>
+      </section>
+
+      <section class="scoreboard" aria-label="Marcador">
+        <div class="score">
+          <span class="score-icon" aria-hidden="true">👣</span>
+          <span>Intentos</span>
+          <strong id="attempt-count">0</strong>
+        </div>
+        <div class="score">
+          <span class="score-icon" aria-hidden="true">⭐</span>
+          <span>Parejas</span>
+          <strong><span id="pair-count">0</span> / 5</strong>
+        </div>
+      </section>
+
+      <section class="board" id="board" aria-label="Cartas del memory musical"></section>
+      <p class="game-message" id="game-message" aria-live="polite">¡Busca las cinco parejas!</p>
+      <button class="restart-button" id="restart-button" type="button">Jugar otra vez</button>
+      <p class="sound-note">El silencio de negra no suena. ¡Escucha con atención!</p>
+    </main>
+  </body>
+</html>
