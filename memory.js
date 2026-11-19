@@ -21,7 +21,7 @@ const figures = [
     id: "rest",
     name: "Silencio",
     color: "#e879a8",
-    svg: '<svg viewBox="0 0 100 120" aria-hidden="true"><path d="M27 27h50v12H42l28 30c6 7 9 14 9 22 0 15-12 25-29 25-14 0-25-6-33-16l12-10c6 8 13 12 22 12 9 0 15-5 15-12 0-5-3-10-8-16L27 43z"></path></svg>',
+    svg: '<svg viewBox="0 0 100 120" aria-hidden="true"><path d="M29 20h43v12L49 51l18 13-17 18 13 12c7 6 8 14 2 20-7 8-21 6-31-4" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
   },
   {
     id: "half",
@@ -37,7 +37,7 @@ const pairCount = document.querySelector("#pair-count");
 const gameMessage = document.querySelector("#game-message");
 const restartButton = document.querySelector("#restart-button");
 
-const beatDuration = 0.48;
+const beatDuration = 0.72;
 let audioContext;
 let noiseBuffer;
 let selection = [];
@@ -151,6 +151,33 @@ function playTambourine(time, context = getAudioContext(), volume = 0.24) {
   }
 }
 
+function playTimpaniRollHit(time, context, volume) {
+  const body = context.createOscillator();
+  const bodyGain = context.createGain();
+  body.type = "sine";
+  body.frequency.setValueAtTime(145, time);
+  body.frequency.exponentialRampToValueAtTime(108, time + 0.38);
+  bodyGain.gain.setValueAtTime(0.0001, time);
+  bodyGain.gain.exponentialRampToValueAtTime(volume, time + 0.012);
+  bodyGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.42);
+  body.connect(bodyGain);
+  bodyGain.connect(context.destination);
+  body.start(time);
+  body.stop(time + 0.43);
+
+  const overtone = context.createOscillator();
+  const overtoneGain = context.createGain();
+  overtone.type = "triangle";
+  overtone.frequency.setValueAtTime(210, time);
+  overtone.frequency.exponentialRampToValueAtTime(165, time + 0.24);
+  overtoneGain.gain.setValueAtTime(volume * 0.24, time);
+  overtoneGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.26);
+  overtone.connect(overtoneGain);
+  overtoneGain.connect(context.destination);
+  overtone.start(time);
+  overtone.stop(time + 0.27);
+}
+
 function playFigure(figureId, startTime, context = getAudioContext(), speed = beatDuration) {
   if (figureId === "quarter") {
     playTambourine(startTime, context);
@@ -163,7 +190,7 @@ function playFigure(figureId, startTime, context = getAudioContext(), speed = be
     }
   } else if (figureId === "half") {
     for (let hit = 0; hit < 8; hit += 1) {
-      playTambourine(startTime + (speed * hit) / 4, context, 0.2);
+      playTimpaniRollHit(startTime + (speed * hit) / 4, context, 0.2);
     }
   }
 }
@@ -246,7 +273,7 @@ function finishGame() {
   const cards = [...board.querySelectorAll(".memory-card")];
   const context = getAudioContext();
   const startTime = context.currentTime + 0.08;
-  const fastBeat = 0.22;
+  const fastBeat = 0.4;
   const rhythm = ["quarter", "eighth", "sixteenth", "rest", "half"];
 
   for (let cycle = 0; cycle < 3; cycle += 1) {
